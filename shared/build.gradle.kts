@@ -15,24 +15,52 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
+
+        // apple watch
+        watchosArm64(),
+        watchosArm32(),
+        watchosX64(),
+        watchosSimulatorArm64(),
+        watchosDeviceArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "wearGuard"
             isStatic = true
         }
     }
 
     sourceSets {
-        commonMain.dependencies {
-            //put your multiplatform dependencies here
+        kotlin.applyDefaultHierarchyTemplate()
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.coroutines.core)
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+            }
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.coroutines.core)
+                implementation("com.google.android.gms:play-services-wearable:19.0.0")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
+            }
+        }
+
+        val watchosMain by getting
+        val iosArm64Main by getting
+        val iosX64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by getting {
+            dependencies {
+
+            }
         }
     }
 }

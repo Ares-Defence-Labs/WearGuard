@@ -1,4 +1,4 @@
-package com.architect.wearguard
+package com.architect.wearguardclient
 
 interface Platform {
     val name: String

@@ -1,4 +1,4 @@
-package com.architect.wearguard
+package com.architect.wearguardclient
 
 class Greeting {
     private val platform: Platform = getPlatform()

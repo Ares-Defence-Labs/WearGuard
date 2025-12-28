@@ -1,4 +1,4 @@
-package com.architect.wearguard
+package com.architect.wearguardclient
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${android.os.Build.VERSION.SDK_INT}"
