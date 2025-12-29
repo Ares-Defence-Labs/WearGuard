@@ -19,9 +19,6 @@ It abstracts transport, connection lifecycle, retries, acknowledgements, and mes
 </p>
 
 <p align="center">
-  <a href="https://central.sonatype.com/artifact/io.github.thearchitect123/wear-guard">
-    <img src="https://central.sonatype.com/artifact/io.github.thearchitect123/wear-guard.svg" />
-  </a>
   <a href="https://github.com/Ares-Defence-Labs/WearGuard">
     <img src="https://img.shields.io/badge/targets-AppleWatch,_Android,_iOS-white.svg" />
   </a>
