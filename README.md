@@ -6,6 +6,8 @@ Built for **Kotlin Multiplatform (KMP)** and **Flutter**
 WearGuard provides a **reliable, structured, and battery-aware communication layer** between wearables (Wear OS, watchOS) and companion mobile apps.  
 It abstracts transport, connection lifecycle, retries, acknowledgements, and message routing — so you focus on **data**, not plumbing.
 
+WearGuard can also be used for low-level device configuration and control, making it suitable for advanced, research, and custom firmware environments, including unlocked or modified wearable devices.
+
 ---
 
 <p align="center">
