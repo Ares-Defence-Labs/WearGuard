@@ -89,7 +89,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.thearchitect123",
         artifactId = "wear-guard",
-        version = "1.0.0"
+        version = "1.0.1"
     )
 
     // Configure POM metadata for the published artifact
