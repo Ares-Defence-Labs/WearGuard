@@ -1,7 +1,9 @@
 package com.architect.wearguardclient
 
-interface Platform {
-    val name: String
-}
+expect class TriggerConnection{
+    companion object {
+        fun runConnection()
 
-expect fun getPlatform(): Platform
+        fun sendData()
+    }
+}

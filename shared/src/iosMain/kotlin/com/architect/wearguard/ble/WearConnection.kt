@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.*
 import platform.Foundation.*
 import platform.WatchConnectivity.*
 import platform.darwin.NSObject
-import kotlin.concurrent.Volatile
 
 class ApplePhoneConnection(
     override val id: WearConnectionId,
@@ -37,8 +36,6 @@ class ApplePhoneConnection(
         if (WCSession.isSupported()) WCSession.defaultSession() else null
 
     private val activation = CompletableDeferred<Boolean>()
-    @Volatile private var activateCalled = false
-
     private val delegate = IosSessionDelegate(
         namespace = namespace,
         onEvent = { evt -> scope.launch { _events.emit(evt) } },
@@ -49,18 +46,10 @@ class ApplePhoneConnection(
     )
 
     override suspend fun connect(policy: ConnectionPolicy): ConnectionResult {
-        val s = session ?: return ConnectionResult.Failure(
-            error = WearError.TransportFailure(null, "WatchConnectivity not supported"),
-            retryable = false
-        )
-
         return try {
             withContext(Dispatchers.Main) {
-                s.delegate = delegate
-                if (!activateCalled) {
-                    activateCalled = true
-                    s.activateSession()
-                }
+                session?.delegate = delegate
+                session?.activateSession()
             }
 
             val ok = withTimeout(policy.connectTimeoutMs) { activation.await() }
@@ -76,7 +65,7 @@ class ApplePhoneConnection(
             scope.launch {
                 _events.emit(
                     WearEvent.Log(
-                        "WCSession activated (paired=${s.paired}, watchAppInstalled=${s.watchAppInstalled}, reachable=${s.reachable}, state=${s.activationState})"
+                        "WCSession activated (paired=${session?.paired}, watchAppInstalled=${session?.watchAppInstalled}, reachable=${session?.reachable}, state=${session?.activationState})"
                     )
                 )
                 _events.emit(WearEvent.PeerUpdated(peer))
@@ -100,22 +89,33 @@ class ApplePhoneConnection(
             scope.launch { _events.emit(WearEvent.Log("WCSession delegate cleared")) }
             true
         } catch (t: Throwable) {
-            scope.launch { _events.emit(WearEvent.Error(WearError.TransportFailure(null, t.message ?: "disconnect failed"))) }
+            scope.launch {
+                _events.emit(
+                    WearEvent.Error(
+                        WearError.TransportFailure(
+                            null,
+                            t.message ?: "disconnect failed"
+                        )
+                    )
+                )
+            }
             false
         }
     }
 
     override suspend fun send(message: WearMessage): SendResult {
-        val s = session ?: return SendResult.Failed(
-            WearError.TransportFailure(null, "WatchConnectivity not supported")
-        )
-
         if (!activation.isCompleted) {
-            return SendResult.Failed(WearError.TransportFailure(null, "WCSession not activated (call connect() first)"))
+            return SendResult.Failed(
+                WearError.TransportFailure(
+                    null,
+                    "WCSession not activated (call connect() first)"
+                )
+            )
         }
 
         return try {
-            val path = if (message.type.startsWith("/")) message.type else "$namespace/${message.type}"
+            val path =
+                if (message.type.startsWith("/")) message.type else "$namespace/${message.type}"
             val payloadMap: Map<Any?, Any?> = mapOf(
                 "path" to path,
                 "bytes" to message.payload.toNSData(),
@@ -124,18 +124,27 @@ class ApplePhoneConnection(
             )
 
             withContext(Dispatchers.Main) {
-                if (!s.reachable) {
+                if (session?.reachable == false) {
                     throw IllegalStateException("Counterpart not reachable (WCSession.reachable=false). Use send when reachable.")
                 }
 
-                s.sendMessage(
+                session?.sendMessage(
                     message = payloadMap,
                     replyHandler = { _ ->
                         // optional ack
                     },
                     errorHandler = { error ->
                         val detail = error?.localizedDescription ?: "sendMessage error"
-                        scope.launch { _events.emit(WearEvent.Error(WearError.TransportFailure(null, detail))) }
+                        scope.launch {
+                            _events.emit(
+                                WearEvent.Error(
+                                    WearError.TransportFailure(
+                                        null,
+                                        detail
+                                    )
+                                )
+                            )
+                        }
                     }
                 )
             }
@@ -148,6 +157,7 @@ class ApplePhoneConnection(
         }
     }
 }
+
 internal class IosSessionDelegate(
     private val namespace: String,
     private val onEvent: (WearEvent) -> Unit,
