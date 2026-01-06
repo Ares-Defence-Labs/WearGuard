@@ -22,6 +22,10 @@ class AndroidWearConnection(
     override val id: WearConnectionId,
     private val namespace: String = "/wearguard"
 ) : WearConnection {
+    override suspend fun activateConnectionOnLaunch() {
+        // apple specific connection
+    }
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val mutex = Mutex()
 
@@ -55,6 +59,18 @@ class AndroidWearConnection(
         scope.launch {
             _incoming.emit(msg)
         }
+    }
+
+    override suspend fun onReceived(requestId: String, type: String, payload: ByteArray): SendResult {
+        return send(
+            WearMessage(
+                id = "resp-$requestId",
+                type = type,
+                correlationId = requestId,
+                payload = payload,
+                expectsAck = false
+            )
+        )
     }
 
     override suspend fun connect(policy: ConnectionPolicy): ConnectionResult = mutex.withLock {

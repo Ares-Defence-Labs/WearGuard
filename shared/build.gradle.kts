@@ -46,6 +46,7 @@ kotlin {
             dependencies {
                 implementation(libs.coroutines.core)
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+                implementation("org.jetbrains.kotlinx:atomicfu:0.29.0")
             }
         }
 

@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.jetbrains.kotlin.konan.target.Family
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -17,7 +19,7 @@ kotlin {
         }
     }
 
-    val xcf = XCFramework("wearGuard")
+    val xcf = XCFramework("testClientShared")
 
     val iosTargets = listOf(
         iosArm64(),
@@ -30,13 +32,14 @@ kotlin {
     )
 
     (iosTargets
-//            +
-//            watchTargets
+            +
+            watchTargets
             ).forEach { target ->
         target.binaries.framework {
-            baseName = "wearGuard"
+            baseName = "testClientShared"
             isStatic = true
             xcf.add(this)
+            export(projects.wearguardShared)
         }
     }
 
@@ -47,9 +50,10 @@ kotlin {
         kotlin.applyDefaultHierarchyTemplate()
         val commonMain by getting {
             dependencies {
-                implementation(projects.wearguardShared)
+                api(projects.wearguardShared)
                 implementation(libs.coroutines.core)
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+                implementation("org.jetbrains.kotlinx:atomicfu:0.29.0")
             }
         }
 
@@ -68,7 +72,7 @@ kotlin {
         }
 
         val iosMain by getting
-        val watchosMain by getting
+//        val watchosMain by getting
 
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

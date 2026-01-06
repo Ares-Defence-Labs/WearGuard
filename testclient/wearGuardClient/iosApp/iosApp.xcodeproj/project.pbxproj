@@ -12,8 +12,10 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		C35203462F0348DC002321BE /* watchComponents Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C352033C2F0348DB002321BE /* watchComponents Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C35203512F0359FF002321BE /* wearGuard.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C35203502F0359FF002321BE /* wearGuard.xcframework */; };
-		C35203522F0359FF002321BE /* wearGuard.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C35203502F0359FF002321BE /* wearGuard.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C36F2BC22F0D4E4B00C6DC4D /* testClientShared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36F2BBB2F0D393800C6DC4D /* testClientShared.xcframework */; };
+		C36F2BC32F0D4E4B00C6DC4D /* testClientShared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C36F2BBB2F0D393800C6DC4D /* testClientShared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C36F2BC52F0D4E5400C6DC4D /* testClientShared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36F2BBB2F0D393800C6DC4D /* testClientShared.xcframework */; };
+		C36F2BC62F0D4E5400C6DC4D /* testClientShared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C36F2BBB2F0D393800C6DC4D /* testClientShared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,16 +29,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7555FFB4242A642300829871 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C35203472F0348DC002321BE /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -48,13 +40,24 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C35203532F0359FF002321BE /* Embed Frameworks */ = {
+		C36F2BC42F0D4E4B00C6DC4D /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C35203522F0359FF002321BE /* wearGuard.xcframework in Embed Frameworks */,
+				C36F2BC32F0D4E4B00C6DC4D /* testClientShared.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C36F2BC72F0D4E5400C6DC4D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C36F2BC62F0D4E5400C6DC4D /* testClientShared.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,6 +75,7 @@
 		C352034B2F034FBF002321BE /* wearGuard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = wearGuard.framework; path = "../testClientShared/build/xcode-frameworks/Debug/iphoneos26.2/wearGuard.framework"; sourceTree = "<group>"; };
 		C35203502F0359FF002321BE /* wearGuard.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = wearGuard.xcframework; path = ../testClientShared/build/XCFrameworks/debug/wearGuard.xcframework; sourceTree = "<group>"; };
 		C35203552F03AB04002321BE /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
+		C36F2BBB2F0D393800C6DC4D /* testClientShared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = testClientShared.xcframework; path = ../testClientShared/build/XCFrameworks/debug/testClientShared.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -83,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C36F2BC52F0D4E5400C6DC4D /* testClientShared.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C35203512F0359FF002321BE /* wearGuard.xcframework in Frameworks */,
+				C36F2BC22F0D4E4B00C6DC4D /* testClientShared.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +145,7 @@
 		7555FFB0242A642200829871 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C36F2BBB2F0D393800C6DC4D /* testClientShared.xcframework */,
 				C35203502F0359FF002321BE /* wearGuard.xcframework */,
 				C352034B2F034FBF002321BE /* wearGuard.framework */,
 			);
@@ -157,8 +163,8 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
-				7555FFB4242A642300829871 /* Embed Frameworks */,
 				C35203472F0348DC002321BE /* Embed Watch Content */,
+				C36F2BC72F0D4E5400C6DC4D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -178,7 +184,7 @@
 				C35203382F0348DB002321BE /* Sources */,
 				C35203392F0348DB002321BE /* Frameworks */,
 				C352033A2F0348DB002321BE /* Resources */,
-				C35203532F0359FF002321BE /* Embed Frameworks */,
+				C36F2BC42F0D4E4B00C6DC4D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -266,7 +272,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :testClientShared:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "cd \"$SRCROOT/..\"\n\n./gradlew :testClientShared:assembleTestClientSharedDebugXCFramework\n#./gradlew :testClientShared:assembleWearGuardReleaseXCFramework\n";
 		};
 		C352034F2F035765002321BE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -283,7 +289,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n\n./gradlew :testClientShared:assembleWearGuardDebugXCFramework\n./gradlew :testClientShared:assembleWearGuardReleaseXCFramework\n";
+			shellScript = "cd \"$SRCROOT/..\"\n\n./gradlew :testClientShared:assembleTestClientSharedDebugXCFramework\n#./gradlew :testClientShared:assembleWearGuardReleaseXCFramework\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

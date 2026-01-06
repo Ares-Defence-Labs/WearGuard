@@ -9,4 +9,5 @@ actual object WearConnectionFactory {
             namespace = config.namespace,
         )
     }
+
 }

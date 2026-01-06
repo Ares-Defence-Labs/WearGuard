@@ -14,6 +14,8 @@ interface WearConnection {
     val events: Flow<WearEvent>
     val incoming: Flow<WearMessage>
 
+    suspend fun onReceived(requestId: String, type: String, payload: ByteArray): SendResult
+    suspend fun activateConnectionOnLaunch()
     suspend fun connect(policy: ConnectionPolicy = ConnectionPolicy()): ConnectionResult
     suspend fun disconnect(): Boolean
     suspend fun send(message: WearMessage): SendResult

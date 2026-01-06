@@ -1,12 +1,14 @@
 [versions]
 agp = "8.9.1"
-kotlin = "2.1.0"
+kotlin = "2.2.0"
 compose = "1.5.4"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 kotlinCore = "1.10.2"
+essentialsApi = "2.7.7"
 
 [libraries]
+essentials = { group = "io.github.thearchitect123", name = "kmpEssentials", version.ref = "essentialsApi" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCore" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }

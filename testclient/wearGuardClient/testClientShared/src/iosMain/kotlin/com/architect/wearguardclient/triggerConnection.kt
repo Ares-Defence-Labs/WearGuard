@@ -11,15 +11,21 @@ import kotlinx.coroutines.launch
 
 actual class TriggerConnection {
     actual companion object {
-        actual fun runConnection() {
-            val wearConnection = WearConnectionFactory.create(
-                WearConnectionConfig(
-                    id = WearConnectionId("testClientApp"),
-                    appId = "testClientApp",
-                    namespace = "/testClient"
-                )
+        val wearConnection = WearConnectionFactory.create(
+            WearConnectionConfig(
+                id = WearConnectionId("testClientApp"),
+                appId = "testClientApp",
+                namespace = "/testClient"
             )
+        )
 
+        fun registerConnection(){
+            GlobalScope.launch {
+                wearConnection.activateConnectionOnLaunch()
+            }
+        }
+
+        actual fun runConnection() {
             // to register the wearConnection as a default connection (there can only be a single default)
             WearConnectionRegistry.register(
                 wearConnection,
@@ -32,12 +38,27 @@ actual class TriggerConnection {
                     .connect(ConnectionPolicy())
 
                 wearConnection.incoming.collect { message ->
+                    val payload = message.payload.decodeToString()
+                    println("iOS received: $payload")
+
+                    if (message.expectsAck && message.correlationId != null) {
+                        // This is a REQUEST → respond manually
+                        WearConnectionRegistry.default().onReceived(
+                            requestId = message.correlationId!!,
+                            type = "/testClient/response",
+                            payload = "pong from iOS".encodeToByteArray()
+                        )
+                    } else {
+                        println("Push message received: $payload")
+                    }
+                }
+
+                wearConnection.events.collect { message ->
                     println(
-                        "Results Captured - ${
-                            message.payload.decodeToString()
+                        "EVENTS Captured - ${
+                            message
                         }"
                     )
-                    // Handle incoming data here
                 }
             }
         }
